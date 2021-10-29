@@ -1,0 +1,29 @@
+{
+  "name": "tech_blog",
+  "version": "1.0.0",
+  "description": "Blog that displays comments and has login verify",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erebus009/tech_blog.git"
+  },
+  "author": "Travis Purear",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Erebus009/tech_blog/issues"
+  },
+  "homepage": "https://github.com/Erebus009/tech_blog#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.7",
+    "mysql2": "^2.3.2",
+    "nodemon": "^2.0.14",
+    "router": "^1.3.5",
+    "sequelize": "^6.8.0"
+  }
+}
