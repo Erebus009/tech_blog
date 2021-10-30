@@ -2,8 +2,8 @@ const express = require("express");
 const sequelize = require("./config/connection");
 const helper = require("./utils/helpers");
 const path = require("path");
+const routes = require('./controllers')
 const session = require("express-session");
-const techblogRoutes = require('./routes/techblogRoutes')
 const expressHBS = require("express-handlebars");
 const hbs = expressHBS.create({ helper });
 
@@ -35,11 +35,9 @@ app.use(session(sess));
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
-app.use(techblogRoutes);
+app.use(routes)
 
 // Turns PORT into a server by listening and connects DB to it.
-app.listen({ port : PORT }, async() => {
-console.log(`Server located at http://localhost:${PORT}`);
-await sequelize.sync({force : false})  
-console.log('Database Synced!');
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log(`Now listening http://localhost:${PORT}`));
 });
