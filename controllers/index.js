@@ -10,8 +10,9 @@ router.use("/",homeRoute)
 router.use("/api",apiRoute)
 router.use("/posts",postsRoute)
 
+
 router.use((res,res) => {
-    res.statusCode(404).redirect('/404')
+    res.status(404).redirect('/404page')
 })
 
 

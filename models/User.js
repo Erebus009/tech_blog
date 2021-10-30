@@ -1,6 +1,11 @@
-const { Model, DataTypes } = require("sequelize/types");
-const sequelize = require('sequelize')
-const bcrypt = require('bcrypt')
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require('../config/connection')
+const bcrypt = require('bcrypt');
+
+
+class User extends Model {}
+
+
 
 // User SQL columns defined
 User.init({
@@ -31,12 +36,21 @@ User.init({
     password: {
         type:DataTypes.STRING,
         allowNull: false,
-        validate:{
+         validate:{
             len: [5]
+            }
         }
 
-    },
-    hooks: {
+    },{
+    
+        sequelize: sequelize,
+        modelName: 'user',
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+            
+
+     hooks: {
         // Before create of new user it waits until bcrypt has encrypted  user password from original input.
         async beforeCreate(newUserData) {
             newUserData.password = await bcrypt.hash(newUserData.password, 10);
@@ -49,11 +63,17 @@ User.init({
         }
 
     },
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'user'
+    
+        
+        
+
+
+
+    
+   
+   
+    
+    
   }
 );
 
