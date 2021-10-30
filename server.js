@@ -40,6 +40,6 @@ app.use(techblogRoutes);
 // Turns PORT into a server by listening and connects DB to it.
 app.listen({ port : PORT }, async() => {
 console.log(`Server located at http://localhost:${PORT}`);
-await sequelize.sync({force : true})  
+await sequelize.sync({force : false})  
 console.log('Database Synced!');
 });
