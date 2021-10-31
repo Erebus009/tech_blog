@@ -5,7 +5,7 @@ const helper = require("./utils/helpers");
 const path = require("path");
 
 
-const route = require('./controllers/')
+const route = require('./controllers')
 const session = require("express-session");
 const expressHBS = require("express-handlebars");
 
@@ -21,12 +21,12 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
   secret: "secretWord",
-  resave: true,
+  resave: false,
   rolling: true,
   saveUninitialized: true,
   cookie: {
     // session cookie will DELETE after 15 mins. 900000 miliseconds = 15mins.
-    MaxAge: 900000,
+    maxAge: 900000,
   },
   store: new SequelizeStore({
     db: sequelize,
