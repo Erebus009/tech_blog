@@ -26,7 +26,7 @@ const sess = {
   saveUninitialized: true,
   cookie: {
     // session cookie will DELETE after 15 mins. 900000 miliseconds = 15mins.
-    maxAge: 900000,
+    maxAge: 9000,
   },
   store: new SequelizeStore({
     db: sequelize,

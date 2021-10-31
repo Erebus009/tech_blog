@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models");
+const  {User,Post,Comment}  = require("../models");
 
 
 
@@ -8,12 +8,25 @@ const { User } = require("../models");
 
 
 router.get("/", async (req, res) => {
-  const userData = await User.findAll().catch((err) => {
-    res.status(500).json(err);
-  });
-  const user = userData.map((userinfo) => userinfo.get({ plain: true }));
+    Post.findAll({
+        attributes: [
+            'id',
+            'title',
+            'content',
+            'created_at'
 
-  res.render("homepage", { user });
+
+        ],
+        include: [{
+            model: Comment,
+            attributes: ['id','text_content','user_id','post_id']
+        }
+        ]
+
+        
+    })
+
+  res.render("homepage");
 });
 
 
