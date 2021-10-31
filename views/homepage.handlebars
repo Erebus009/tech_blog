@@ -6,14 +6,16 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-      {{#if loggedIn}}
-      <a class="nav-item nav-link" href="/profile">Profile</a>
       
-      {{/if}}
-      {{#unless loggedIn}}
-      <a class="nav-item nav-link justify-content-right"  href="/register">Sign Up</a>
+      <a class="nav-item nav-link" href="/profile">Profile</a>
+
+      
+      
+      {{#if loggedIn}}
       <a class="nav-item nav-link justify-content-right"  href="/login">Login</a>
-      {{/unless}}
+      <a class="nav-item nav-link justify-content-right"  href="/signup">Sign Up</a>
+      {{/if}}
+     
 
     </div>
   </div>

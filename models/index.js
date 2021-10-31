@@ -4,7 +4,7 @@ const Comment = require('./Comment');
 
 
 User.hasMany(Post, {
-    foreignKey:'user_d'
+    foreignKey:'user_id'
 })
 User.hasMany(Comment,{
     foreignKey: 'user_id'

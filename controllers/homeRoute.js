@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const  {User,Post,Comment}  = require("../models");
-
-
+const { body, validationResult } = require('express-validator');
+const passwordAuth = require('../utils/passwordAuth')
 
 
 
@@ -42,6 +42,10 @@ router.get('/', (req, res) => {
     })
 })
 
+
+
+
+
   
 router.get('/signup', (req, res) => {
     if (req.session.loggedIn) {
@@ -50,7 +54,7 @@ router.get('/signup', (req, res) => {
       
     }
   
-    res.render('register');
+    res.render('signup');
   });
 
   router.get('/login', (req, res) => {
@@ -63,6 +67,13 @@ router.get('/signup', (req, res) => {
     res.render('login');
   });
 
+  router.get('/logout', passwordAuth, (req,res) => {
+    if(req.session.loggedIn){
+      req.session.destroy(() => {
+        res.status(200).redirect('/login')
+      })
+    }
+  })
 
 
 

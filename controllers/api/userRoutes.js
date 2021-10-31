@@ -1,6 +1,8 @@
 const { User } = require("../../models");
-const passwordAuth = require('../../utils/passwordAuth')
+const passwordAuth = require("../../utils/passwordAuth");
 const router = require("express").Router();
+const { check, validationResult } = require("express-validator");
+
 
 router.get("/", async (req, res) => {
   User.findAll({
@@ -16,86 +18,79 @@ router.get("/", async (req, res) => {
 // DELETE user by id from DATABASE
 //===============================
 
-
 router.delete("/:id", async (req, res) => {
   User.destroy({
     attributes: { exclude: ["password"] },
     where: {
       id: req.params.id,
     },
-  }).then((UserData) => {
-    if (!UserData) {
-      res.status(404).json({ message: "No user found with this id" });
-      return;
-    }
-    res.json(UserData);
-  }).catch((err) => {
-    console.log(err);
-    res.status(500).json(err);
-  });
+  })
+    .then((UserData) => {
+      if (!UserData) {
+        res.status(404).json({ message: "No user found with this id" });
+        return;
+      }
+      res.json(UserData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 //==============================
 //Post new user to api/users that targets into mysql user table in database
 //=============================
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   User.create({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    
   })
-  .then(userData => {
-      req.session.save(() => {
+  .then((userData) => {
+    req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
       req.session.loggedIn = true;
-  
+
       res.json(userData);
     });
   });
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    // Find the user who matches the posted e-mail address
+    const userData = await User.findOne({ where: { email: req.body.email } });
 
-
-router.post('/login', (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then(userData => {
     if (!userData) {
-      res.status(400).json({ message: 'No user with this email address' });
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
       return;
     }
-    
 
-    
-
-
-    const validPassword = userData.checkPassword(req.body.password);
+    // Verify the posted password with the password store in the database
+    const validPassword = await userData.checkPassword(req.body.password);
 
     if (!validPassword) {
-      res.status(400).json({ message: 'Wrong password' });
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
       return;
     }
 
+    // Create session variables based on the logged in user
     req.session.save(() => {
-      // declare session variables
       req.session.user_id = userData.id;
-      req.session.username = userData.username;
-      req.session.loggedIn = true;
+      req.session.logged_in = true;
 
-      res.json({ user: userData, message: 'You are logged in' });
+      res.json({ user: userData, message: "You are now logged in!" });
     });
-  });
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
-
-
-
-
-
-
 
 router.get("/:id", async (req, res) => {
   const userID = await User.findByPk(req.params.id, {
@@ -108,5 +103,12 @@ router.get("/:id", async (req, res) => {
   const user = userID.get({ plain: true });
   res.json(user);
 });
+//================================================================================================
+// Logout and destory current session of User that passes checks to make sure it is the correct user session being destroyed.
+//========================================================================================================
+
+
+
+
 
 module.exports = router;

@@ -8,29 +8,8 @@ router.get('/', passwordAuth, (req, res) => {
       where: {
         user_id: req.session.user_id
       },
-      attributes: [
-        'id',
-        'title',
-        'created_at',
-        'content'
-      ],
-      include: [
-        {
-          model: Comment,
-          attributes: ['id', 'text_content', 'post_id', 'user_id', 'created_at'],
-          include: {
-            model: User,
-            attributes: ['username']
-          }
-        },
-        {
-          model: User,
-          attributes: ['username']
-        }
-      ]
     })
       .then(PostData => {
-        // serialize data before passing to template
         const posts = PostData.map(post => post.get({ plain: true }));
         res.render('profile', { posts, loggedIn: true });
       })
@@ -39,8 +18,6 @@ router.get('/', passwordAuth, (req, res) => {
         res.status(500).json(err);
       });
   });
-
-
 
 
 
