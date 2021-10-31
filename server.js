@@ -1,7 +1,7 @@
 const express = require("express");
 const sequelize = require("./config/connection");
 
-const helper = require("./utils/helpers");
+const helpers = require("./utils/helpers");
 const path = require("path");
 
 
@@ -26,7 +26,7 @@ const sess = {
   saveUninitialized: true,
   cookie: {
     // session cookie will DELETE after 15 mins. 900000 miliseconds = 15mins.
-    maxAge: 9000,
+    maxAge: 900000,
   },
   store: new SequelizeStore({
     db: sequelize,
@@ -39,6 +39,7 @@ app.use(session(sess));
 const hbs = expressHBS.create({
   defaultLayout: 'main',
   partialsDir: 'views/partials/',
+  helpers
 });
 
 app.engine('handlebars', hbs.engine);

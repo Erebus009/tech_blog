@@ -12,12 +12,12 @@ router.get('/', passwordAuth, (req, res) => {
         'id',
         'title',
         'created_at',
-        'post_content'
+        'content'
       ],
       include: [
         {
           model: Comment,
-          attributes: ['id', 'content', 'post_id', 'user_id', 'created_at'],
+          attributes: ['id', 'text_content', 'post_id', 'user_id', 'created_at'],
           include: {
             model: User,
             attributes: ['username']

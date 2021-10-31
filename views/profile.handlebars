@@ -6,12 +6,10 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-      {{#if req.session.loggedIn}}
+      {{#if loggedIn}}
       <a class="nav-item nav-link" href="/profile">Profile</a>
-      
       {{/if}}
-      <a class="nav-item nav-link justify-content-right"  href="/register">Sign Up</a>
-      <a class="nav-item nav-link justify-content-right"  href="/login">Login</a>
+      <a class="nav-item nav-link justify-content-right"  href="/login">Log out</a>
 
     </div>
   </div>
@@ -19,11 +17,5 @@
 
 
 
-<ul class="post-list">
-  {{#each posts as |post|}}
-  <li style="list-style: none;">
-    {{> posts post }}
-  </li>
-  {{/each}}
-</ul>
-</div>
+
+<h1>{{user.username}}</h1>

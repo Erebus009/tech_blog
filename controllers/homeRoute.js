@@ -35,7 +35,6 @@ router.get('/', (req, res) => {
     })
     .then(postData => {
         const posts = postData.map(post => post.get({plain:true}));
-        console.log(posts);
         res.render('homepage', {posts})
     }).catch((err) => {
         res.status(500).json(err)
@@ -44,22 +43,22 @@ router.get('/', (req, res) => {
 })
 
   
-router.get('/login', (req, res) => {
+router.get('/register', (req, res) => {
     if (req.session.loggedIn) {
-      res.redirect('/');
-      return;
+      res.redirect('/profile');
+      
+    }
+  
+    res.render('register');
+  });
+
+  router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/profile');
+      
     }
   
     res.render('login');
-  });
-
-  router.get('/signup', (req, res) => {
-    if (req.session.loggedIn) {
-      res.redirect('/');
-      return;
-    }
-  
-    res.render('signup');
   });
 
 

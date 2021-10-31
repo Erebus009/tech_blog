@@ -9,7 +9,9 @@ body {
 .card {
     background-color: rgb(26, 26, 26);
     color: white;
-    margin: 20px;
+    margin-top: 20px;
+    margin-right: 50px;
+
 }
 .card-header{
     text-decoration: underline;
