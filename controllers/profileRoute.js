@@ -3,11 +3,22 @@ const passwordAuth = require('../utils/passwordAuth')
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
-router.get('/', passwordAuth, (req, res) => {
+router.get('/', (req, res) => {
     Post.findAll({
+      attributes:[
+        'title',
+        'id',
+        'created_at',
+        'content'
+
+    ],
       where: {
         user_id: req.session.user_id
-      },
+      },include:[ {
+        model: User,
+        attributes:['username']
+        }
+      ]
     })
       .then(PostData => {
         const posts = PostData.map(post => post.get({ plain: true }));
@@ -19,7 +30,11 @@ router.get('/', passwordAuth, (req, res) => {
       });
   });
 
-
+  router.get('/createPost',(req,res) => {
+    res.render('newPost')
+  })
+  
+  
 
 
 

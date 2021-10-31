@@ -1,7 +1,44 @@
-const { User } = require("../../models");
-const passwordAuth = require("../../utils/passwordAuth");
-const router = require("express").Router();
-const { check, validationResult } = require("express-validator");
+const router = require('express').Router();
+const { User } = require('../../models');
+
+router.post('/login', async (req, res) => {
+  try {
+    const userData = await User.findOne({ where: { email: req.body.email } });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+      return;
+    }
+
+    const validPassword = await userData.checkPassword(req.body.password);
+   
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or password, please try again' });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+      
+      res.json({ user: userData, message: 'You are now logged in!' });
+    });
+
+  } catch (err) {
+    res.status(400).send(err)
+  }
+});
+
+
+
+
+
+
+
 
 
 router.get("/", async (req, res) => {
@@ -46,8 +83,7 @@ router.post("/", (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-  })
-  .then((userData) => {
+  }).then((userData) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
@@ -58,39 +94,10 @@ router.post("/", (req, res) => {
   });
 });
 
-router.post("/login", async (req, res) => {
-  try {
-    // Find the user who matches the posted e-mail address
-    const userData = await User.findOne({ where: { email: req.body.email } });
 
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
-    }
 
-    // Verify the posted password with the password store in the database
-    const validPassword = await userData.checkPassword(req.body.password);
 
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
-    }
 
-    // Create session variables based on the logged in user
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.json({ user: userData, message: "You are now logged in!" });
-    });
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
 
 router.get("/:id", async (req, res) => {
   const userID = await User.findByPk(req.params.id, {
@@ -103,12 +110,6 @@ router.get("/:id", async (req, res) => {
   const user = userID.get({ plain: true });
   res.json(user);
 });
-//================================================================================================
-// Logout and destory current session of User that passes checks to make sure it is the correct user session being destroyed.
-//========================================================================================================
-
-
-
 
 
 module.exports = router;

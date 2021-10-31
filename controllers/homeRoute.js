@@ -45,7 +45,6 @@ router.get('/', (req, res) => {
 
 
 
-
   
 router.get('/signup', (req, res) => {
     if (req.session.loggedIn) {
@@ -66,6 +65,10 @@ router.get('/signup', (req, res) => {
   
     res.render('login');
   });
+
+//==========================================================================================================================
+// Logout and destory current session of User that passes checks to make sure it is the correct user session being destroyed.
+//===========================================================================================================================
 
   router.get('/logout', passwordAuth, (req,res) => {
     if(req.session.loggedIn){

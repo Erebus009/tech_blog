@@ -44,19 +44,21 @@ router.get('/:id', async (req,res) => {
 })
 
 
-router.post('/', async (req,res) => {
-    Post.create({
-        title: req.body.title,
-        content: req.body.content,
-        user_id: req.body.user_id
 
-    }).then((PostData) => res.json(PostData))
-    .catch((err) => { res.status(500).json(err)
-        
+
+
+    router.post('/', (req, res) => {
+        Post.create({
+          title: req.body.title,
+          content: req.body.content,
+          user_id: req.session.user_id
         })
-    })
-
-
+          .then(PostData => res.json(PostData))
+          .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+    });
 
 
 

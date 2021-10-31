@@ -9,13 +9,14 @@
       {{#if loggedIn}}
       <a class="nav-item nav-link active" href="/profile">Profile</a>
       {{/if}}
-      <a class="nav-item nav-link justify-content-right"  href="/logout">Log out</a>
+      
 
     </div>
   </div>
 </nav>
-
-
+<h1>{{{content}}}</h1>
+<p class="text-right text-white"><a href="/profile/createPost"><button class="btn btn-success mt-5 mr-5"  id="post-btn">+ Make New Post</button></p></a>
+<p class="text-right text-white"><a href="/"><button class="btn btn-success mt-5 mr-5"  id="post-btn">Logout</button></p></a>
 
 
 

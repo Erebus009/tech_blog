@@ -4,53 +4,44 @@ const sequelize = require("./config/connection");
 const helpers = require("./utils/helpers");
 const path = require("path");
 
-
-const route = require('./controllers')
+const route = require("./controllers");
 const session = require("express-session");
 const expressHBS = require("express-handlebars");
 
-const bodyParser = require('body-parser')
+const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-
-
-
-
 const sess = {
-  secret: "secretWord",
-  resave: true,
-  rolling: true,
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  expires: 10000,
   saveUninitialized: true,
-  cookie: {
-    // session cookie will DELETE after 15 mins. 900000 miliseconds = 15mins.
-    maxAge: 900000,
-  },
   store: new SequelizeStore({
-    db: sequelize,
-  }),
+    db: sequelize
+  })
 };
 
-app.use(session(sess));
 
 
 const hbs = expressHBS.create({
-  defaultLayout: 'main',
-  partialsDir: 'views/partials/',
-  helpers
+  defaultLayout: "main",
+  partialsDir: "views/partials/",
+  helpers,
 });
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(session(sess));
 
 app.use(route);
-
 
 // Turns PORT into a server by listening and connects DB to it.
 sequelize.sync({ force: false }).then(() => {

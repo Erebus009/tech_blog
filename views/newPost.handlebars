@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Tech Blog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      
+      <a class="nav-item nav-link active" href="/profile">Profile</a>
+
+      
+      
+      {{#if loggedIn}}
+      <a class="nav-item nav-link justify-content-right"  href="/login">Login</a>
+      <a class="nav-item nav-link justify-content-right"  href="/signup">Sign Up</a>
+      {{/if}}
+     
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+<section>
+    <p class="text-center text-light"><a href="/profile" class="text-center text-light"> Back to Profile</a></p>
+  <h2 class="title text-center text-light">New blog post</h2><hr>
+
+  <form class="form newPost">
+    <div class="text-center text-light">
+      
+      <input class="input" type="text" id="title" name="title" placeholder="insert blog title here"/>
+    </div>
+    <div class="text-center text-light mt-3">
+      
+      <input class="text-center " style="height:100px; width:400px" id="content" name="content" placeholder="insert blog content here"/>
+    </div>
+    <p class="text-center mt-4"><button type="submit" class="btn btn-warning">create post</button></p>
+  </form>
+</section>
+
+<script src="/javascript/newpost.js"></script>
