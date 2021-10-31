@@ -2,11 +2,11 @@ const router = require("express").Router();
 
 const apiRoute = require("./api");
 const homeRoute = require("./homeRoute.js");
-const postsRoute = require("./allPosts.js");
+const profileRoute = require("./profileRoute.js");
 
 router.use("/", homeRoute);
 router.use("/api", apiRoute);
-router.use("/posts", postsRoute);
+router.use("/profile", profileRoute);
 
 router.use((req,res) => {
     res.status(404).render('404page')
