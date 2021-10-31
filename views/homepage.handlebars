@@ -11,3 +11,14 @@
     </div>
   </div>
 </nav>
+
+
+
+<ul class="post-list">
+  {{#each posts as |post|}}
+  <li style="list-style: none;">
+    {{> posts post }}
+  </li>
+  {{/each}}
+</ul>
+</div>
