@@ -1,5 +1,5 @@
 const { User } = require("../../models");
-
+const passwordAuth = require('../../utils/passwordAuth')
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
@@ -56,7 +56,9 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/register', (req, res) => {
+
+
+router.post('/login', (req, res) => {
   User.findOne({
     where: {
       email: req.body.email
@@ -66,6 +68,10 @@ router.post('/register', (req, res) => {
       res.status(400).json({ message: 'No user with this email address' });
       return;
     }
+    
+
+    
+
 
     const validPassword = userData.checkPassword(req.body.password);
 

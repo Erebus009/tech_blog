@@ -21,7 +21,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
   secret: "secretWord",
-  resave: false,
+  resave: true,
   rolling: true,
   saveUninitialized: true,
   cookie: {
