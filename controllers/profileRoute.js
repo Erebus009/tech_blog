@@ -1,9 +1,7 @@
 const router = require("express").Router();
 const passwordAuth = require('../utils/passwordAuth')
-const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
-const session = require("express-session");
-const { destroy } = require("../models/User");
+
 
 router.get('/', (req, res) => {
     Post.findAll({
