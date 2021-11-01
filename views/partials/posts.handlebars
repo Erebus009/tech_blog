@@ -5,7 +5,13 @@
   <div class="card-body ">
     <blockquote class="blockquote mb-0">
       <p>{{content}}</p>
-      <footer class="blockquote-footer">{{user.username}}  {{format_date created_at}}</footer>
+      <div class="input-group" style="width:300px; ">
+    <textarea class="form-control custom-control" placeholder="Add Comment here" rows="3" style="height: 80px;"></textarea>     
+    <span class="input-group-addon btn btn-primary">Post</span>
+      </div>
+      
+      <footer class="blockquote-footer mt-2">{{user.username}}  {{format_date created_at}}</footer>
     </blockquote>
+    
   </div>
 </div>

@@ -16,9 +16,11 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
   secret: 'Super secret secret',
-  cookie: {},
-  resave: false,
-  expires: 10000,
+  cookie: {
+    maxAge: 6 * 100000
+  },
+  resave: true,
+  rolling: true,
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize
@@ -40,7 +42,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sess));
-
 app.use(route);
 
 // Turns PORT into a server by listening and connects DB to it.
