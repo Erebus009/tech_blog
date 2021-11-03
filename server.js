@@ -7,13 +7,13 @@ const path = require('path');
 const helpers = require('./utils/helpers');
 
 const exphbs = require('express-handlebars');
+
+
 const hbs = exphbs.create({
   defaultLayout: "main",
   partialsDir: "views/partials/",
   helpers,
 });
-
-
 
 
 
@@ -49,6 +49,7 @@ const routes = require('./controllers');
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
+
 
 app.use(routes);
 

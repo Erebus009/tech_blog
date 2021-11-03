@@ -27,6 +27,7 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.13.0",
     "handlebars": "^4.7.7",
+    "heroku": "^7.59.1",
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
     "router": "^1.3.5",

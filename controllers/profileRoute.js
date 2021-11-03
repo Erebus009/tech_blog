@@ -3,7 +3,7 @@ const passwordAuth = require('../utils/passwordAuth')
 const { Post, User, Comment } = require('../models');
 
 
-router.get('/', (req, res) => {
+router.get('/',passwordAuth, (req, res) => {
     Post.findAll({
       attributes:[
         'title',
@@ -18,11 +18,12 @@ router.get('/', (req, res) => {
         model: User,
         attributes:['username',]
         }
-      ]
+      ], order:[['created_at','DESC']]
     })
       .then(PostData => {
         const posts = PostData.map(post => post.get({ plain: true }));
-        res.render('profile', { posts, loggedIn: true });
+        console.log(posts);
+        res.render('profile', { posts, loggedIn: req.session.loggedIn });
       })
       .catch(err => {
         console.log(err);
@@ -67,14 +68,14 @@ router.get('/', (req, res) => {
         }
       ]
     })
-      .then(dbPostData => {
-        if (!dbPostData) {
+      .then(PostData => {
+        if (!PostData) {
           res.status(404).json({ message: 'No post found with this id' });
           return;
         }
   
-        // serialize the data
-        const post = dbPostData.get({ plain: true });
+
+        const post = PostData.get({ plain: true });
 
         res.render('edit-post', {
             post,

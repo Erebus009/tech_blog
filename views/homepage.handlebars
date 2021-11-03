@@ -1,38 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Tech Blog</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-      
-
-      
-      <a class="nav-item nav-link" href="/profile">Profile <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" id="logout" href="/signup">Log out</a>
-
-      {{#if loggedIn}}
-    
-      <a class="nav-item nav-link justify-content-right"  href="/login">Login</a>
-      <a class="nav-item nav-link justify-content-right"  href="/signup">Sign Up</a>
-      {{/if}}
-     
-
-    </div>
-  </div>
-</nav>
-<h1>{{comment.text_content}}</h1>
 
 
-<ul class="post-list">
-  {{#each posts as |post|}}
-  <li style="list-style: none;">
-    {{> posts post }}
-  </li>
-  {{/each}}
-</ul>
-</div>
+
+{{#each posts as |aPost| }}
+{{!-- Pass in the data to each individual post --}}
+{{> posts aPost}}
+{{/each}}
 
 
 <script src="/Javascript/logout.js"></script>
